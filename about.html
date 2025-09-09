@@ -9,6 +9,20 @@
 <link rel="stylesheet" href="assets/css/styles.css">
 
 <style>
+  /* Hakkımızda sayfasındaki görseller için responsive ayar */
+section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* Mobilde biraz küçült */
+@media (max-width: 767.98px){
+  section img {
+    max-height: 300px; /* mobilde daha küçük */
+    object-fit: cover; /* orantıyı bozmadan kırpar */
+  }
+}
   /* === Mobil menü === */
   .sl-hamburger{
     display:none; font-size:28px; cursor:pointer; background:none; border:0; color:inherit;
@@ -74,7 +88,8 @@
   <p>
     Antalya Akdeniz Üniversitesi Aşçılık bölümünden mezun olmuştur ve bu bölümde kendini fazlasıyla geliştirmiştir. (Hayatını yazcaz)
   </p>
-  <img class="card" src="assets/img/logo.png" height="600" alt="Hikaye görseli">
+  <img class="card" src="assets/img/logo.png" alt="Hikaye görseli">
+
 </section>
 
 <footer>
