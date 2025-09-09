@@ -7,6 +7,44 @@
 <meta name="description" content="Sokak Lezzeti menüsü: burger, hot dog, atıştırmalıklar ve içecekler.">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/css/styles.css">
+
+<style>
+  /* === Mobil menü: çakışmayan sınıflar === */
+  .sl-hamburger{
+    display:none; font-size:28px; cursor:pointer; background:none; border:0; color:inherit;
+  }
+  .sl-mobile-menu{
+    position:fixed; top:0; right:0; height:100%; width:240px;
+    background:#111; padding:20px; display:flex; flex-direction:column; gap:12px;
+    transform:translateX(100%); transition:transform .25s ease; z-index:1001;
+  }
+  .sl-mobile-menu a{ color:#fff; text-decoration:none; padding:10px 0; border-bottom:1px solid #333; }
+  .sl-mobile-menu.active{ transform:translateX(0); }
+  .sl-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.4); display:none; z-index:1000;
+  }
+  .sl-overlay.active{ display:block; }
+
+  /* Küçük ekranda ana menüyü gizle, hamburgeri göster */
+  @media (max-width: 767.98px){
+    header.nav .menu{ display:none !important; }
+    .sl-hamburger{ display:block; }
+  }
+  /* Masaüstünde mobil menüyü tamamen kapat */
+  @media (min-width: 768px){
+    .sl-mobile-menu, .sl-overlay{ display:none !important; }
+  }
+
+  /* === Sadece küçük ekranda ızgarayı tek sütuna düşür === */
+  .stack-sm{} /* varsayılanı bozma */
+  @media (max-width: 767.98px){
+    .stack-sm{ display:grid; grid-template-columns:1fr !important; gap:24px; }
+  }
+
+  /* Footer kolonları mobilde alt alta */
+  footer .cols{ display:grid; grid-template-columns:1fr; gap:24px; }
+  @media (min-width:768px){ footer .cols{ grid-template-columns:1fr 1fr 1fr; } }
+</style>
 </head>
 <body>
 
@@ -22,13 +60,27 @@
       <a href="about.html">Hakkımızda</a>
       <a href="contact.html" class="cta">İletişim</a>
     </nav>
+
+    <!-- Sağ üst hamburger (mobil) -->
+    <button class="sl-hamburger" aria-label="Menüyü aç" onclick="slToggleMenu()">☰</button>
   </div>
 </header>
+
+<!-- Mobil açılır menü + karartma -->
+<div class="sl-overlay" id="slOverlay" onclick="slToggleMenu(false)"></div>
+<nav class="sl-mobile-menu" id="slMobileMenu" aria-hidden="true">
+  <a href="index.html" onclick="slToggleMenu(false)">Ana Sayfa</a>
+  <a href="menu.html" onclick="slToggleMenu(false)">Menü</a>
+  <a href="about.html" onclick="slToggleMenu(false)">Hakkımızda</a>
+  <a href="contact.html" onclick="slToggleMenu(false)">İletişim</a>
+</nav>
 
 <section class="container section">
   <h2>Menü</h2>
   <p class="lead">Burger, hot dog ve sokak atıştırmalıkları.</p>
-  <div class="grid grid-3">
+
+  <!-- Sadece stack-sm eklendi -->
+  <div class="grid grid-3 stack-sm">
     <article class="card"><img src="assets/img/sokakburger.png" alt=""><div class="content"><h3>Klasik Burger</h3><p>İÇİNDEKİ MALZEMELER</p><div class="price">₺200</div></div></article>
     <article class="card"><img src="assets/img/sokakburger.png" alt=""><div class="content"><h3>Burger 2</h3><p>İÇİNDEKİ MALZEMELER</p><div class="price">₺200</div></div></article>
     <article class="card"><img src="assets/img/sokakburger.png" alt=""><div class="content"><h3>Burger 3</h3><p>İÇİNDEKİ MALZEMELER</p><div class="price">₺200</div></div></article>
@@ -64,6 +116,23 @@
   </div>
   <div class="container copy">© <span data-year></span> Sokak Lezzeti • Tüm hakları saklıdır.</div>
 </footer>
+
+<script>
+  // Mobil menü aç/kapat
+  function slToggleMenu(open){
+    const menu = document.getElementById('slMobileMenu');
+    const overlay = document.getElementById('slOverlay');
+    const willOpen = (typeof open === 'boolean') ? open : !menu.classList.contains('active');
+    menu.classList.toggle('active', willOpen);
+    overlay.classList.toggle('active', willOpen);
+    document.body.style.overflow = willOpen ? 'hidden' : '';
+  }
+  // ESC ile kapat
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){ slToggleMenu(false); }
+  });
+</script>
 <script src="assets/js/main.js"></script>
 
-</body></html>
+</body>
+</html>
