@@ -7,6 +7,37 @@
 <meta name="description" content="Sokak Lezzeti hakkında: Sokak kültüründen ilham alan burger & hot dog.">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/css/styles.css">
+
+<style>
+  /* === Mobil menü === */
+  .sl-hamburger{
+    display:none; font-size:28px; cursor:pointer; background:none; border:0; color:inherit;
+  }
+  .sl-mobile-menu{
+    position:fixed; top:0; right:0; height:100%; width:240px;
+    background:#111; padding:20px; display:flex; flex-direction:column; gap:12px;
+    transform:translateX(100%); transition:transform .25s ease; z-index:1001;
+  }
+  .sl-mobile-menu a{ color:#fff; text-decoration:none; padding:10px 0; border-bottom:1px solid #333; }
+  .sl-mobile-menu.active{ transform:translateX(0); }
+  .sl-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.4); display:none; z-index:1000;
+  }
+  .sl-overlay.active{ display:block; }
+
+  /* Küçük ekranda menüyü gizle, hamburgeri göster */
+  @media (max-width: 767.98px){
+    header.nav .menu{ display:none !important; }
+    .sl-hamburger{ display:block; }
+  }
+  @media (min-width: 768px){
+    .sl-mobile-menu, .sl-overlay{ display:none !important; }
+  }
+
+  /* Footer kolonları mobilde alt alta */
+  footer .cols{ display:grid; grid-template-columns:1fr; gap:24px; }
+  @media (min-width:768px){ footer .cols{ grid-template-columns:1fr 1fr 1fr; } }
+</style>
 </head>
 <body>
 
@@ -22,18 +53,28 @@
       <a href="about.html">Hakkımızda</a>
       <a href="contact.html" class="cta">İletişim</a>
     </nav>
+
+    <!-- Mobil hamburger -->
+    <button class="sl-hamburger" aria-label="Menüyü aç" onclick="slToggleMenu()">☰</button>
   </div>
 </header>
 
+<!-- Açılır mobil menü -->
+<div class="sl-overlay" id="slOverlay" onclick="slToggleMenu(false)"></div>
+<nav class="sl-mobile-menu" id="slMobileMenu" aria-hidden="true">
+  <a href="index.html" onclick="slToggleMenu(false)">Ana Sayfa</a>
+  <a href="menu.html" onclick="slToggleMenu(false)">Menü</a>
+  <a href="about.html" onclick="slToggleMenu(false)">Hakkımızda</a>
+  <a href="contact.html" onclick="slToggleMenu(false)">İletişim</a>
+</nav>
+
 <section class="container section">
   <h2>Hikayemiz</h2>
-<H1>Nurullah Özkan</H1>
-      <p>Antalya Akdeniz Üniversitesi Aşçılık bölümünden mezun olmuştur ve bu bölümde kendini fazlasıyla geliştirmiştir. (Hayatını yazcaz)
-    <div>
-      </p>
-    </div>
-    <img class="card" src="assets/img/logo.png" height="600" alt="Hikaye görseli">
-  </div>
+  <h1>Nurullah Özkan</h1>
+  <p>
+    Antalya Akdeniz Üniversitesi Aşçılık bölümünden mezun olmuştur ve bu bölümde kendini fazlasıyla geliştirmiştir. (Hayatını yazcaz)
+  </p>
+  <img class="card" src="assets/img/logo.png" height="600" alt="Hikaye görseli">
 </section>
 
 <footer>
@@ -41,8 +82,9 @@
     <div class="cols">
       <div>
         <img src="assets/img/sokakburger.png" alt="Sokak Burger Logo" style="height:56px">
-        <p style="max-width:520px;margin-top:10px">Sokak ruhunu ve taptaze malzemeleri buluşturuyoruz. Burger ve hot dog'u en lezzetli haliyle sunuyoruz.</p>
-      
+        <p style="max-width:520px;margin-top:10px">
+          Sokak ruhunu ve taptaze malzemeleri buluşturuyoruz. Burger ve hot dog'u en lezzetli haliyle sunuyoruz.
+        </p>
       </div>
       <div>
         <h4>Bağlantılar</h4>
@@ -61,6 +103,21 @@
   </div>
   <div class="container copy">© <span data-year></span> Sokak Lezzeti • Tüm hakları saklıdır.</div>
 </footer>
+
+<script>
+  function slToggleMenu(open){
+    const menu = document.getElementById('slMobileMenu');
+    const overlay = document.getElementById('slOverlay');
+    const willOpen = (typeof open === 'boolean') ? open : !menu.classList.contains('active');
+    menu.classList.toggle('active', willOpen);
+    overlay.classList.toggle('active', willOpen);
+    document.body.style.overflow = willOpen ? 'hidden' : '';
+  }
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){ slToggleMenu(false); }
+  });
+</script>
 <script src="assets/js/main.js"></script>
 
-</body></html>
+</body>
+</html>
