@@ -1,111 +1,83 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sokak Lezzeti | Burger & Hot Dog</title>
-  <meta name="description" content="Sokak Lezzeti: Burger & Hot Dog. Sokak tadında taptaze ve doyurucu lezzetler.">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <style>
-    body { margin: 0; font-family: Arial, sans-serif; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sokak Lezzeti | Burger & Hot Dog</title>
+<meta name="description" content="Sokak Lezzeti: Burger & Hot Dog. Sokak tadında taptaze ve doyurucu lezzetler.">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/css/styles.css">
 
-    /* --- Mobil Menü --- */
-    .menu { display: flex; gap: 16px; }
-    .hamburger {
-      display: none;
-      font-size: 28px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: #fff;
-    }
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 0; right: 0;
-      width: 220px; height: 100%;
-      background: #111;
-      padding: 20px;
-      box-shadow: -2px 0 8px rgba(0,0,0,0.5);
-      flex-direction: column;
-      gap: 12px;
-      z-index: 1000;
-    }
-    .mobile-menu a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 0;
-      border-bottom: 1px solid #333;
-    }
-    .mobile-menu.active { display: flex; }
+<style>
+  /* === Mobil menü: çakışmayan sınıflar === */
+  .sl-hamburger{
+    display:none; font-size:28px; cursor:pointer; background:none; border:0; color:inherit;
+  }
+  .sl-mobile-menu{
+    position:fixed; top:0; right:0; height:100%; width:240px;
+    background:#111; padding:20px; display:flex; flex-direction:column; gap:12px;
+    transform:translateX(100%); transition:transform .25s ease; z-index:1001;
+  }
+  .sl-mobile-menu a{ color:#fff; text-decoration:none; padding:10px 0; border-bottom:1px solid #333; }
+  .sl-mobile-menu.active{ transform:translateX(0); }
+  .sl-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.4); display:none; z-index:1000;
+  }
+  .sl-overlay.active{ display:block; }
 
-    /* Hero */
-    .hero { position: relative; text-align: center; color: #fff; }
-    .hero img { width: 100%; height: auto; display: block; }
-    .hero-text {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 600px; padding: 20px;
-    }
+  /* Küçük ekranda ana menüyü gizle, hamburgeri göster */
+  @media (max-width: 767.98px){
+    header.nav .menu{ display:none !important; }
+    .sl-hamburger{ display:block; }
+  }
+  /* Masaüstünde mobil menüyü tamamen kapat */
+  @media (min-width: 768px){
+    .sl-mobile-menu, .sl-overlay{ display:none !important; }
+  }
 
-    /* Grid */
-    .grid { display: grid; gap: 24px; }
-    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  /* === Sadece küçük ekranda ızgaraları tek sütuna düşürmek için yardımcı sınıf === */
+  .stack-sm{} /* varsayılanı bozma */
+  @media (max-width: 767.98px){
+    .stack-sm{ display:grid; grid-template-columns:1fr !important; gap:24px; }
+  }
 
-    /* Responsive */
-    @media (max-width: 767px) {
-      .menu { display: none; }
-      .hamburger { display: block; }
-      .grid-3 { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: 1fr; }
-      .hero-text { padding: 10px; font-size: 14px; }
-    }
-    @media (min-width: 768px) {
-      .menu { display: flex; }
-      .mobile-menu { display: none !important; }
-    }
-
-    footer .cols {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    @media (min-width: 768px) {
-      footer .cols { grid-template-columns: 1fr 1fr 1fr; }
-    }
-  </style>
+  /* Galeri görselleri taşmasın (mevcut stilleri bozmadan) */
+  .gallery-img{ max-width:100%; height:auto; display:block; }
+</style>
 </head>
 <body>
 
-<header class="nav" style="display:flex;justify-content:space-between;align-items:center;padding:10px 20px;background:#141414;color:#fff;">
-  <div class="brand" style="display:flex;align-items:center;gap:8px;">
-    <img src="assets/img/logo.png" alt="Sokak Lezzeti logo" style="height:40px">
-    <div class="title">Sokak Lezzeti</div>
+<header class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <img src="assets/img/logo.png" alt="Sokak Lezzeti logo">
+      <div class="title">Sokak Lezzeti</div>
+    </div>
+    <nav class="menu">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="menu.html">Menü</a>
+      <a href="about.html">Hakkımızda</a>
+      <a href="contact.html" class="cta">İletişim</a>
+    </nav>
+
+    <!-- Sağ üst hamburger (mobil) -->
+    <button class="sl-hamburger" aria-label="Menüyü aç" onclick="slToggleMenu()">☰</button>
   </div>
-
-  <!-- Masaüstü Menü -->
-  <nav class="menu">
-    <a href="index.html">Ana Sayfa</a>
-    <a href="menu.html">Menü</a>
-    <a href="about.html">Hakkımızda</a>
-    <a href="contact.html" class="cta">İletişim</a>
-  </nav>
-
-  <!-- Mobil Hamburger -->
-  <button class="hamburger" onclick="toggleMenu()">☰</button>
 </header>
 
-<!-- Mobil Açılır Menü -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Ana Sayfa</a>
-  <a href="menu.html">Menü</a>
-  <a href="about.html">Hakkımızda</a>
-  <a href="contact.html">İletişim</a>
-</div>
+<!-- Mobil açılır menü + karartma -->
+<div class="sl-overlay" id="slOverlay" onclick="slToggleMenu(false)"></div>
+<nav class="sl-mobile-menu" id="slMobileMenu" aria-hidden="true">
+  <a href="index.html" onclick="slToggleMenu(false)">Ana Sayfa</a>
+  <a href="menu.html" onclick="slToggleMenu(false)">Menü</a>
+  <a href="about.html" onclick="slToggleMenu(false)">Hakkımızda</a>
+  <a href="contact.html" onclick="slToggleMenu(false)">İletişim</a>
+</nav>
 
 <section class="hero">
-  <img src="assets/img/sokakburger.png" alt="Sokak Lezzeti Hero" style="filter: brightness(0.4);">
+  <img src="assets/img/sokakburger.png" 
+       alt="Sokak Lezzeti Hero" 
+       style="filter: brightness(0.4);">
   <div class="hero-text">
     <h1>Sokak Tadında Efsane Lezzetler</h1>
     <p>El yapımı burger köftesi, özel soslar ve çıtır ekmeklerle hazırlanan menüler. Efsane hot dog ve patateslerimizle tanışın.</p>
@@ -119,7 +91,8 @@
 <section class="container section">
   <h2>Öne Çıkanlar</h2>
   <p class="lead">Sizin için en çok tercih edilen sokak lezzetlerini seçtik.</p>
-  <div class="grid grid-3">
+  <!-- Sadece stack-sm eklendi -->
+  <div class="grid grid-3 stack-sm">
     <article class="card">
       <img src="assets/img/sokakburger.png" alt="Burger">
       <div class="content">
@@ -152,14 +125,15 @@
 
 <section class="container section">
   <h2>Galeri</h2>
-  <div class="grid">
-    <img class="card" src="assets/img/logo.png" alt="Galeri 1">
-    <img class="card" src="assets/img/logo.png" alt="Galeri 2">
-    <h3>Buraya Senin Yaptığın Fotolar Konulcak.</h3>
+  <!-- Sadece stack-sm eklendi; img’lere gallery-img sınıfı verildi -->
+  <div class="grid stack-sm">
+    <img class="card gallery-img" src="assets/img/logo.png" alt="Galeri 1">
+    <img class="card gallery-img" src="assets/img/logo.png" alt="Galeri 2">
+    <h1>Buraya Senin Yaptığın Fotolar Konulcak.</h1>
   </div>
 </section>
 
-<footer style="background:#111;color:#fff;padding:20px 0;">
+<footer>
   <div class="container section">
     <div class="cols">
       <div>
@@ -169,16 +143,16 @@
       </div>
       <div>
         <h4>Bağlantılar</h4>
-        <a href="index.html">Ana Sayfa</a><br>
-        <a href="menu.html">Menü</a><br>
-        <a href="about.html">Hakkımızda</a><br>
+        <a href="index.html">Ana Sayfa</a>
+        <a href="menu.html">Menü</a>
+        <a href="about.html">Hakkımızda</a>
         <a href="contact.html">İletişim</a>
       </div>
       <div>
         <h4>İletişim</h4>
-        <a href="mailto:sokakburgerhotdog@gmail.com">sokakburgerhotdog@gmail.com</a><br>
-        <a href="tel:+905437485476">+90 543 748 5476</a><br>
-        <span>Çankırı, Türkiye</span>
+        <a href="mailto:info@sokaklezzeti.local">sokakburgerhotdog@gmail.com</a>
+        <a href="tel:+900000000000">+90 543 748 5476</a>
+        <a>Çankırı, Türkiye</a>
       </div>
     </div>
   </div>
@@ -186,9 +160,19 @@
 </footer>
 
 <script>
-  function toggleMenu() {
-    document.getElementById("mobileMenu").classList.toggle("active");
+  // Mobil menü aç/kapat
+  function slToggleMenu(open){
+    const menu = document.getElementById('slMobileMenu');
+    const overlay = document.getElementById('slOverlay');
+    const willOpen = (typeof open === 'boolean') ? open : !menu.classList.contains('active');
+    menu.classList.toggle('active', willOpen);
+    overlay.classList.toggle('active', willOpen);
+    document.body.style.overflow = willOpen ? 'hidden' : '';
   }
+  // ESC ile kapat
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){ slToggleMenu(false); }
+  });
 </script>
 <script src="assets/js/main.js"></script>
 
