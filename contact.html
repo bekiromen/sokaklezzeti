@@ -17,7 +17,7 @@
     .map-container {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 oran */
+      padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
       border-radius: 12px;
@@ -33,21 +33,18 @@
       border: 0;
     }
 
-    /* Mobil uyumlu grid */
     .grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 32px;
     }
 
-    /* Form elemanlarını mobil için biraz daha uyumlu yap */
     form.card input,
     form.card textarea {
       width: 100%;
       box-sizing: border-box;
     }
 
-    /* Footer için responsive düzen */
     footer .cols {
       display: grid;
       grid-template-columns: 1fr;
@@ -58,7 +55,47 @@
       margin-bottom: 10px;
     }
 
-    /* Tablet ve üstü için */
+    /* --- Mobil Menü --- */
+    .menu {
+      display: flex;
+      gap: 16px;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #fff;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 220px;
+      height: 100%;
+      background: #111;
+      padding: 20px;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.5);
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mobile-menu a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    /* Tablet ve üstü */
     @media (min-width: 768px) {
       .grid {
         grid-template-columns: 1fr 1fr;
@@ -66,34 +103,63 @@
       footer .cols {
         grid-template-columns: 1fr 1fr 1fr;
       }
+      .hamburger {
+        display: none;
+      }
+      .menu {
+        display: flex;
+      }
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    /* Mobilde menüyü gizle */
+    @media (max-width: 767px) {
+      .menu {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header class="nav">
-    <div class="container nav-inner">
-      <div class="brand">
-        <img src="assets/img/logo.png" alt="Sokak Lezzeti logo">
-        <div class="title">Sokak Lezzeti</div>
-      </div>
-      <nav class="menu">
-        <a href="index.html">Ana Sayfa</a>
-        <a href="menu.html">Menü</a>
-        <a href="about.html">Hakkımızda</a>
-        <a href="contact.html" class="cta">İletişim</a>
-      </nav>
+  <header class="nav" style="display:flex;justify-content:space-between;align-items:center;padding:10px 20px;background:#141414;color:#fff;">
+    <div class="brand" style="display:flex;align-items:center;gap:8px;">
+      <img src="assets/img/logo.png" alt="Sokak Lezzeti logo" style="height:40px">
+      <div class="title">Sokak Lezzeti</div>
     </div>
+
+    <!-- Masaüstü Menü -->
+    <nav class="menu">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="menu.html">Menü</a>
+      <a href="about.html">Hakkımızda</a>
+      <a href="contact.html" class="cta">İletişim</a>
+    </nav>
+
+    <!-- Mobil Hamburger -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
   </header>
 
-  <section class="container section">
+  <!-- Mobil Açılır Menü -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="menu.html">Menü</a>
+    <a href="about.html">Hakkımızda</a>
+    <a href="contact.html">İletişim</a>
+  </div>
+
+  <section class="container section" style="padding:20px;">
     <h2>İletişim</h2>
     <p class="lead">Öneri ve iş birlikleri için bize ulaşın.</p>
 
-    <!-- Form -->
     <div class="grid">
-      <form class="card" action="#" method="post" style="padding:16px">
+      <form class="card" action="#" method="post" style="padding:16px;background:#1c1c1c;border-radius:12px;">
         <label>Ad Soyad</label>
         <input name="name" required
           style="padding:12px;border-radius:12px;border:1px solid #333;background:#141414;color:#fff;margin:8px 0 12px">
@@ -108,7 +174,6 @@
       </form>
     </div>
 
-    <!-- Harita -->
     <div class="map-container" style="margin-top:32px">
       <iframe
         src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE"
@@ -119,7 +184,7 @@
     </div>
   </section>
 
-  <footer>
+  <footer style="background:#111;color:#fff;padding:20px 0;">
     <div class="container section">
       <div class="cols">
         <div>
@@ -130,9 +195,9 @@
         </div>
         <div>
           <h4>Bağlantılar</h4>
-          <a href="index.html">Ana Sayfa</a>
-          <a href="menu.html">Menü</a>
-          <a href="about.html">Hakkımızda</a>
+          <a href="index.html">Ana Sayfa</a><br>
+          <a href="menu.html">Menü</a><br>
+          <a href="about.html">Hakkımızda</a><br>
           <a href="contact.html">İletişim</a>
         </div>
         <div>
@@ -143,9 +208,14 @@
         </div>
       </div>
     </div>
-    <div class="container copy">© <span data-year></span> Sokak Lezzeti • Tüm hakları saklıdır.</div>
+    <div class="container copy" style="margin-top:10px;">© <span data-year></span> Sokak Lezzeti • Tüm hakları saklıdır.</div>
   </footer>
 
+  <script>
+    function toggleMenu() {
+      document.getElementById("mobileMenu").classList.toggle("active");
+    }
+  </script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
