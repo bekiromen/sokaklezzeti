@@ -8,6 +8,25 @@
   <meta name="description" content="Sokak Lezzeti iletişim: sipariş, öneri ve iş birlikleri.">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .map-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 oran */
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .map-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -30,7 +49,9 @@
   <section class="container section">
     <h2>İletişim</h2>
     <p class="lead">Öneri ve iş birlikleri için bize ulaşın.</p>
-    <div class="grid" style="grid-template-columns:1fr 1fr;gap:32px">
+    
+    <!-- Form tek başına -->
+    <div class="grid" style="grid-template-columns:1fr;gap:32px">
       <form class="card" action="#" method="post" style="padding:16px">
         <label>Ad Soyad</label>
         <input name="name" required
@@ -44,49 +65,27 @@
         <button class="btn red" type="submit">Gönder</button>
         <p style="font-size:12px;color:#bbb;margin-top:8px">Demo form – sunucu bağlantısı yoktur.</p>
       </form>
+    </div>
 
-  <style>
-    .map-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 oran */
-      height: 0;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-    .map-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Buraya harita kodunu ekleyin -->
-  <div class="map-container">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
-
-
+    <!-- Harita formun altında -->
+    <div class="map-container" style="margin-top:32px">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
   
-
   <footer>
     <div class="container section">
       <div class="cols">
         <div>
           <img src="assets/img/sokakburger.png" alt="Sokak Burger Logo" style="height:56px">
-          <p style="max-width:520px;margin-top:10px">Sokak ruhunu ve taptaze malzemeleri buluşturuyoruz. Burger ve hot
-            dog'u en lezzetli haliyle sunuyoruz.</p>
-
+          <p style="max-width:520px;margin-top:10px">
+            Sokak ruhunu ve taptaze malzemeleri buluşturuyoruz. Burger ve hot dog'u en lezzetli haliyle sunuyoruz.
+          </p>
         </div>
         <div>
           <h4>Bağlantılar</h4>
@@ -97,18 +96,15 @@
         </div>
         <div>
           <h4>İletişim</h4>
-          <a href="mailto:info@sokaklezzeti.local">sokakburgerhotdog@gmail.com</a>
-          <a href="tel:+900000000000">+90 543 748 5476/a>
-            <a>Çankırı, Türkiye</a>
+          <a href="mailto:sokakburgerhotdog@gmail.com">sokakburgerhotdog@gmail.com</a>
+          <a href="tel:+905437485476">+90 543 748 5476</a>
+          <a>Çankırı, Türkiye</a>
         </div>
       </div>
     </div>
     <div class="container copy">© <span data-year></span> Sokak Lezzeti • Tüm hakları saklıdır.</div>
   </footer>
+
   <script src="assets/js/main.js"></script>
-
-
-
 </body>
-
 </html>
