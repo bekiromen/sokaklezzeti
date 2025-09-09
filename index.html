@@ -1,34 +1,111 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sokak Lezzeti | Burger & Hot Dog</title>
-<meta name="description" content="Sokak Lezzeti: Burger & Hot Dog. Sokak tadında taptaze ve doyurucu lezzetler.">
-<link rel="icon" type="image/png" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sokak Lezzeti | Burger & Hot Dog</title>
+  <meta name="description" content="Sokak Lezzeti: Burger & Hot Dog. Sokak tadında taptaze ve doyurucu lezzetler.">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+
+    /* --- Mobil Menü --- */
+    .menu { display: flex; gap: 16px; }
+    .hamburger {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #fff;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; right: 0;
+      width: 220px; height: 100%;
+      background: #111;
+      padding: 20px;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.5);
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1000;
+    }
+    .mobile-menu a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+    }
+    .mobile-menu.active { display: flex; }
+
+    /* Hero */
+    .hero { position: relative; text-align: center; color: #fff; }
+    .hero img { width: 100%; height: auto; display: block; }
+    .hero-text {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 600px; padding: 20px;
+    }
+
+    /* Grid */
+    .grid { display: grid; gap: 24px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    /* Responsive */
+    @media (max-width: 767px) {
+      .menu { display: none; }
+      .hamburger { display: block; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .hero-text { padding: 10px; font-size: 14px; }
+    }
+    @media (min-width: 768px) {
+      .menu { display: flex; }
+      .mobile-menu { display: none !important; }
+    }
+
+    footer .cols {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      footer .cols { grid-template-columns: 1fr 1fr 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="nav">
-  <div class="container nav-inner">
-    <div class="brand">
-      <img src="assets/img/logo.png" alt="Sokak Lezzeti logo">
-      <div class="title">Sokak Lezzeti</div>
-    </div>
-    <nav class="menu">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="menu.html">Menü</a>
-      <a href="about.html">Hakkımızda</a>
-      <a href="contact.html" class="cta">İletişim</a>
-    </nav>
+<header class="nav" style="display:flex;justify-content:space-between;align-items:center;padding:10px 20px;background:#141414;color:#fff;">
+  <div class="brand" style="display:flex;align-items:center;gap:8px;">
+    <img src="assets/img/logo.png" alt="Sokak Lezzeti logo" style="height:40px">
+    <div class="title">Sokak Lezzeti</div>
   </div>
+
+  <!-- Masaüstü Menü -->
+  <nav class="menu">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="menu.html">Menü</a>
+    <a href="about.html">Hakkımızda</a>
+    <a href="contact.html" class="cta">İletişim</a>
+  </nav>
+
+  <!-- Mobil Hamburger -->
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
 </header>
 
+<!-- Mobil Açılır Menü -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Ana Sayfa</a>
+  <a href="menu.html">Menü</a>
+  <a href="about.html">Hakkımızda</a>
+  <a href="contact.html">İletişim</a>
+</div>
+
 <section class="hero">
-<img src="assets/img/sokakburger.png" 
-     alt="Sokak Lezzeti Hero" 
-     style="filter: brightness(0.4);">
+  <img src="assets/img/sokakburger.png" alt="Sokak Lezzeti Hero" style="filter: brightness(0.4);">
   <div class="hero-text">
     <h1>Sokak Tadında Efsane Lezzetler</h1>
     <p>El yapımı burger köftesi, özel soslar ve çıtır ekmeklerle hazırlanan menüler. Efsane hot dog ve patateslerimizle tanışın.</p>
@@ -75,14 +152,14 @@
 
 <section class="container section">
   <h2>Galeri</h2>
-  <div class="grid" style="grid-template-columns:1fr 1fr">
-    <img class="card" src="assets/img/logo.png" height="500" alt="Galeri 1">
-    <img class="card" src="assets/img/logo.png" height="500" alt="Galeri 2">
-    <h1>Buraya Senin Yaptığın Fotolar Konulcak.</h1>
+  <div class="grid">
+    <img class="card" src="assets/img/logo.png" alt="Galeri 1">
+    <img class="card" src="assets/img/logo.png" alt="Galeri 2">
+    <h3>Buraya Senin Yaptığın Fotolar Konulcak.</h3>
   </div>
 </section>
 
-<footer>
+<footer style="background:#111;color:#fff;padding:20px 0;">
   <div class="container section">
     <div class="cols">
       <div>
@@ -92,21 +169,28 @@
       </div>
       <div>
         <h4>Bağlantılar</h4>
-        <a href="index.html">Ana Sayfa</a>
-        <a href="menu.html">Menü</a>
-        <a href="about.html">Hakkımızda</a>
+        <a href="index.html">Ana Sayfa</a><br>
+        <a href="menu.html">Menü</a><br>
+        <a href="about.html">Hakkımızda</a><br>
         <a href="contact.html">İletişim</a>
       </div>
       <div>
         <h4>İletişim</h4>
-        <a href="mailto:info@sokaklezzeti.local">sokakburgerhotdog@gmail.com</a>
-        <a href="tel:+900000000000">+90 543 748 5476</a>
-        <a>Çankırı, Türkiye</a>
+        <a href="mailto:sokakburgerhotdog@gmail.com">sokakburgerhotdog@gmail.com</a><br>
+        <a href="tel:+905437485476">+90 543 748 5476</a><br>
+        <span>Çankırı, Türkiye</span>
       </div>
     </div>
   </div>
   <div class="container copy">© <span data-year></span> Sokak Lezzeti • Tüm hakları saklıdır.</div>
 </footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("active");
+  }
+</script>
 <script src="assets/js/main.js"></script>
 
-</body></html>
+</body>
+</html>
